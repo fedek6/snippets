@@ -1,7 +1,8 @@
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://www.yourdomain.tld",
+    siteUrl: "https:/fedek6.github.io",
     title: "Snippets",
   },
+  pathPrefix: "/snippets",
   plugins: [],
 };
