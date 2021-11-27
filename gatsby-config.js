@@ -4,5 +4,5 @@ module.exports = {
     title: "Snippets",
   },
   pathPrefix: "/snippets",
-  plugins: [],
+  plugins: ["gatsby-plugin-antd"],
 };
