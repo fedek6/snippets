@@ -1,13 +1,11 @@
-import * as React from "react"
+import * as React from "react";
 
 // markup
-const IndexPage = () => {
-  return (
-    <main>
-      <title>RH snippets</title>
-      <h1>Hello World</h1>
-    </main>
-  )
-}
+const IndexPage = () => (
+  <main>
+    <title>RH snippets</title>
+    <h1>Hello World</h1>
+  </main>
+);
 
-export default IndexPage
+export default IndexPage;
