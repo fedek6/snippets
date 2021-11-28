@@ -1,6 +1,6 @@
 import * as React from "react";
 import { graphql } from "gatsby";
-import { MDXRenderer } from "gatsby-plugin-mdx";
+import MdxBlock from "../components/mdx/MdxBlock";
 import Layout from "../components/layouts/DefaultLayout";
 
 // markup
@@ -11,7 +11,7 @@ const PlagroundPage = ({ data }) => (
         <article key={node.id}>
           <h2>{node.frontmatter.title}</h2>
           <p>Posted: {node.frontmatter.date}</p>
-          <MDXRenderer>{node.body}</MDXRenderer>
+          <MdxBlock>{node.body}</MdxBlock>
         </article>
       ))}
     </Layout>
