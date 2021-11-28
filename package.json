@@ -19,6 +19,7 @@
     "antd": "^4.17.2",
     "gatsby": "^4.2.0",
     "gatsby-plugin-antd": "^2.2.0",
+    "gatsby-source-filesystem": "^4.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },
