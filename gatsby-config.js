@@ -30,5 +30,8 @@ module.exports = {
         path: path.join(__dirname, "content"),
       },
     },
+    {
+      resolve: "gatsby-plugin-mdx",
+    },
   ],
 };
