@@ -1,10 +1,20 @@
 import * as React from "react";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import { MDXProvider } from "@mdx-js/react";
-import CodeBlock from "../code/CodeBlock";
+import { Typography } from "antd";
+import CodeBlock from "./components/CodeBlock";
+
+const { Title, Paragraph } = Typography;
 
 const components = {
   pre: CodeBlock,
+  p: Paragraph
+};
+
+for (let i = 1; i <= 6; i += 1) {
+  components[`h${i}`] = ({ children }) => (
+    <Title level={i}>{children}</Title>
+  );
 };
 
 const MdxBlock = ({ children }) => (
