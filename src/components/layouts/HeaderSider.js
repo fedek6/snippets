@@ -87,7 +87,7 @@ const HeaderSider = ({ pageTitle, children }) => {
                 minHeight: 280,
               }}
             >
-              {pageTitle}
+              <h1>{pageTitle}</h1>
               {children}
             </Content>
           </Layout>
