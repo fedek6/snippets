@@ -13,6 +13,9 @@ const { Header, Content, Sider } = Layout;
 const HeaderSider = ({ pageTitle, children }) => {
   const data = useStaticQuery(graphql`
     query {
+      allMdx {
+        categories: distinct(field: fields___category)
+      }
       site {
         siteMetadata {
           title
@@ -31,6 +34,12 @@ const HeaderSider = ({ pageTitle, children }) => {
         <Header className="header">
           <div className="logo" />
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
+            {
+              data.allMdx.categories.map((category) => (
+                  <Menu.Item key={category}>{ category }</Menu.Item>
+                )
+              )
+            }
             <Menu.Item key="1">nav 1</Menu.Item>
             <Menu.Item key="2">nav 2</Menu.Item>
             <Menu.Item key="3">nav 3</Menu.Item>
