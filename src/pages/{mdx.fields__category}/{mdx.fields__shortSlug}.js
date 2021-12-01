@@ -1,7 +1,7 @@
 import * as React from "react";
 import { graphql } from "gatsby";
-import MdxBlock from "../components/mdx/MdxBlock";
-import Layout from "../components/layouts/HeaderSider";
+import MdxBlock from "../../components/mdx/MdxBlock";
+import Layout from "../../components/layouts/HeaderSider";
 
 // markup
 const PlagroundPage = ({ data }) => (
