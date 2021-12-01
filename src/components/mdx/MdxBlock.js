@@ -4,11 +4,12 @@ import { MDXProvider } from "@mdx-js/react";
 import { Typography } from "antd";
 import CodeBlock from "./components/CodeBlock";
 
-const { Title, Paragraph } = Typography;
+const { Title, Paragraph, Text } = Typography;
 
 const components = {
+  code: ({ children }) => (<Text code>{ children }</Text>),
   pre: CodeBlock,
-  p: Paragraph
+  p: Paragraph,
 };
 
 for (let i = 1; i <= 6; i += 1) {
