@@ -34,6 +34,10 @@ export const query = graphql`
               title
               subcategory
             }
+            fields {
+              shortSlug
+            }
+            slug
           }
         }
         totalCount

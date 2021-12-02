@@ -1,6 +1,5 @@
 import * as React from "react";
 import { graphql } from "gatsby";
-import MdxBlock from "../../components/mdx/MdxBlock";
 import Layout from "../../components/layouts/HeaderSider";
 
 // markup
@@ -14,8 +13,6 @@ const PlagroundPage = ({ data, location }) => (
       {data.allMdx.nodes.map((node) => (
         <article key={node.id}>
           <h2>{node.frontmatter.title}</h2>
-          <p>Posted: {node.frontmatter.date}</p>
-          <MdxBlock>{node.body}</MdxBlock>
         </article>
       ))}
     </Layout>
@@ -46,6 +43,10 @@ export const query = graphql`
               title
               subcategory
             }
+            fields {
+              shortSlug
+            }
+            slug
           }
         }
         totalCount
