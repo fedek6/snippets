@@ -1,5 +1,8 @@
 const path = require("path");
 const darkTheme = require("@ant-design/dark-theme").default;
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
 
 module.exports = {
   siteMetadata: {
