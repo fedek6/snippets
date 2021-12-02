@@ -4,9 +4,9 @@ import MdxBlock from "../components/mdx/MdxBlock";
 import Layout from "../components/layouts/HeaderSider";
 
 // markup
-const PlagroundPage = ({ data }) => (
+const PlagroundPage = ({ data, location }) => (
   <>
-    <Layout pageTitle="main">
+    <Layout pageTitle="main" location={location}>
       {data.allMdx.nodes.map((node) => (
         <article key={node.id}>
           <h2>{node.frontmatter.title}</h2>

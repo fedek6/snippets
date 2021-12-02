@@ -1,11 +1,13 @@
 import * as React from "react";
-import Layout from "../components/layouts/DefaultLayout";
+import Layout from "../components/layouts/HeaderSider";
 
 // markup
-const IndexPage = () => (
+const HomePage = ({ location }) => (
   <>
-    <Layout pageTitle="main">aaa</Layout>
+    <Layout pageTitle="home" location={location}>
+      Hello World!
+    </Layout>
   </>
 );
 
-export default IndexPage;
+export default HomePage;
