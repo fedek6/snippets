@@ -11,11 +11,19 @@ import { urlParser } from "../../lib/helpers";
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
-const HeaderSider = ({ pageTitle, children, location }) => {
+const HeaderSider = ({ pageTitle, children, location, categoryContent }) => {
+  const { pathname } = location;
+  // eslint-disable-next-line no-unused-vars
+  const { category: currentCategory, slug: currentSlug } = urlParser(
+    pathname,
+    JSON.parse(process.env.GATSBY_GET_VARS)
+  );
+
   const data = useStaticQuery(graphql`
     query {
       allMdx {
         categories: distinct(field: fields___category)
+        subcategories: distinct(field: frontmatter___subcategory)
       }
       site {
         siteMetadata {
@@ -25,12 +33,7 @@ const HeaderSider = ({ pageTitle, children, location }) => {
     }
   `);
 
-  const { pathname } = location;
-  // eslint-disable-next-line no-unused-vars
-  const { category: currentCategory, slug: currentSlug } = urlParser(
-    pathname,
-    JSON.parse(process.env.GATSBY_GET_VARS)
-  );
+    console.log(categoryContent);
 
   return (
     <>
