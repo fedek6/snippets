@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useStaticQuery, graphql } from "gatsby";
+import { useStaticQuery, graphql, Link } from "gatsby";
 import { Layout, Menu, Breadcrumb } from "antd";
 import {
   UserOutlined,
@@ -10,7 +10,11 @@ import {
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
-const HeaderSider = ({ pageTitle, children }) => {
+const HeaderSider = ({ pageTitle, children, location }) => {
+  const { pathname } = location;
+
+  console.log(pathname);
+
   const data = useStaticQuery(graphql`
     query {
       allMdx {
@@ -33,13 +37,21 @@ const HeaderSider = ({ pageTitle, children }) => {
       <Layout>
         <Header className="header">
           <div className="logo" />
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[data.allMdx.categories[0]]}>
-            {
-              data.allMdx.categories.map((category) => (
-                  <Menu.Item key={category}>{ category }</Menu.Item>
-                )
-              )
-            }
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            activeKey={pathname}
+            selectedKeys={pathname}
+          >
+            {data.allMdx.categories.map((category) => {
+              const categoryPath = `/${category}`;
+
+              return (
+                <Menu.Item key={categoryPath}>
+                  <Link to={categoryPath}>{category}</Link>
+                </Menu.Item>
+              );
+            })}
           </Menu>
         </Header>
         <Layout>
@@ -93,7 +105,6 @@ const HeaderSider = ({ pageTitle, children }) => {
                 minHeight: 280,
               }}
             >
-              <h1>{pageTitle}</h1>
               {children}
             </Content>
           </Layout>

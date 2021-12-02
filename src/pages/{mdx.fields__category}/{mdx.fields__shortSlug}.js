@@ -4,9 +4,9 @@ import MdxBlock from "../../components/mdx/MdxBlock";
 import Layout from "../../components/layouts/HeaderSider";
 
 // markup
-const PlagroundPage = ({ data }) => (
+const PlagroundPage = ({ data, location }) => (
   <>
-    <Layout pageTitle={data.mdx.frontmatter.title}>
+    <Layout pageTitle={data.mdx.frontmatter.title} location={location}>
       <MdxBlock>{data.mdx.body}</MdxBlock>
     </Layout>
   </>
