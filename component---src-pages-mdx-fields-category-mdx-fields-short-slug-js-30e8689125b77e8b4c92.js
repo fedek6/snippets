@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunksnippets=self.webpackChunksnippets||[]).push([[962],{3056:function(e,t,n){n.r(t);var a=n(7294),l=n(7305),r=n(1186);t.default=function(e){var t=e.data,n=e.location;return a.createElement(a.Fragment,null,a.createElement(r.Z,{pageTitle:t.mdx.frontmatter.title,location:n},a.createElement(l.Z,null,t.mdx.body)))}}}]);
+//# sourceMappingURL=component---src-pages-mdx-fields-category-mdx-fields-short-slug-js-30e8689125b77e8b4c92.js.map
