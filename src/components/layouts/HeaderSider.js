@@ -6,14 +6,15 @@ import {
   LaptopOutlined,
   NotificationOutlined,
 } from "@ant-design/icons";
+import { urlParser } from "../../lib/helpers";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
 const HeaderSider = ({ pageTitle, children, location }) => {
   const { pathname } = location;
-
-  console.log(pathname);
+  // eslint-disable-next-line no-unused-vars
+  const { category: currentCategory, slug: currentSlug } = urlParser(pathname);
 
   const data = useStaticQuery(graphql`
     query {
@@ -40,14 +41,14 @@ const HeaderSider = ({ pageTitle, children, location }) => {
           <Menu
             theme="dark"
             mode="horizontal"
-            activeKey={pathname}
-            selectedKeys={pathname}
+            activeKey={currentCategory}
+            selectedKeys={currentCategory}
           >
             {data.allMdx.categories.map((category) => {
               const categoryPath = `/${category}`;
 
               return (
-                <Menu.Item key={categoryPath}>
+                <Menu.Item key={category}>
                   <Link to={categoryPath}>{category}</Link>
                 </Menu.Item>
               );
