@@ -3,6 +3,7 @@ import { useStaticQuery, graphql, Link } from "gatsby";
 import { Layout, Menu, Breadcrumb } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { urlParser } from "../../lib/helpers";
+import { myContext } from "../../Provider";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -63,32 +64,38 @@ const HeaderSider = ({
             width={200}
             className="site-layout-background"
           >
-            <Menu
-              mode="inline"
-              style={{ height: "100%", borderRight: 0 }}
-              activeKey={currentSlug}
-              defaultOpenKeys={[currentSubCategory]}
-            >
-              {categoryContent.map((subCategory) => {
-                const { fieldValue } = subCategory;
+            <myContext.Consumer>
+              {(context) => (
+                <Menu
+                  mode="inline"
+                  style={{ height: "100%", borderRight: 0 }}
+                  activeKey={currentSlug}
+                  defaultOpenKeys={[currentSubCategory]}
+                  openKeys={context.openKeys}
+                  onOpenChange={k => context.setOpenKeys(k)}
+                >
+                  {categoryContent.map((subCategory) => {
+                    const { fieldValue } = subCategory;
 
-                return (
-                  <SubMenu
-                    key={fieldValue}
-                    icon={<UserOutlined />}
-                    title={fieldValue}
-                  >
-                    {subCategory.edges.map((edge) => (
-                      <Menu.Item key={edge.node.fields.shortSlug}>
-                        <Link to={`/${edge.node.slug}`}>
-                          {edge.node.frontmatter.title}
-                        </Link>
-                      </Menu.Item>
-                    ))}
-                  </SubMenu>
-                );
-              })}
-            </Menu>
+                    return (
+                      <SubMenu
+                        key={fieldValue}
+                        icon={<UserOutlined />}
+                        title={fieldValue}
+                      >
+                        {subCategory.edges.map((edge) => (
+                          <Menu.Item key={edge.node.fields.shortSlug}>
+                            <Link to={`/${edge.node.slug}`}>
+                              {edge.node.frontmatter.title}
+                            </Link>
+                          </Menu.Item>
+                        ))}
+                      </SubMenu>
+                    );
+                  })}
+                </Menu>
+              )}
+            </myContext.Consumer>
           </Sider>
           <Layout style={{ padding: "0 24px 24px" }}>
             <Breadcrumb style={{ margin: "16px 0" }}>
