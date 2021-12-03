@@ -7,7 +7,13 @@ import { urlParser } from "../../lib/helpers";
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
-const HeaderSider = ({ pageTitle, children, location, categoryContent }) => {
+const HeaderSider = ({
+  pageTitle,
+  children,
+  location,
+  categoryContent,
+  currentSubCategory,
+}) => {
   const { pathname } = location;
   // eslint-disable-next-line no-unused-vars
   const { category: currentCategory, slug: currentSlug } = urlParser(
@@ -38,12 +44,7 @@ const HeaderSider = ({ pageTitle, children, location, categoryContent }) => {
       <Layout>
         <Header className="header">
           <div className="logo" />
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            activeKey={currentCategory}
-            selectedKeys={currentCategory}
-          >
+          <Menu theme="dark" mode="horizontal" selectedKeys={currentCategory}>
             {data.allMdx.categories.map((category) => {
               const categoryPath = `/${category}`;
 
@@ -62,7 +63,12 @@ const HeaderSider = ({ pageTitle, children, location, categoryContent }) => {
             width={200}
             className="site-layout-background"
           >
-            <Menu mode="inline" style={{ height: "100%", borderRight: 0 }}>
+            <Menu
+              mode="inline"
+              style={{ height: "100%", borderRight: 0 }}
+              activeKey={currentSlug}
+              defaultOpenKeys={[currentSubCategory]}
+            >
               {categoryContent.map((subCategory) => {
                 const { fieldValue } = subCategory;
 
@@ -99,6 +105,7 @@ const HeaderSider = ({ pageTitle, children, location, categoryContent }) => {
               }}
             >
               {children}
+              {currentSubCategory}
             </Content>
           </Layout>
         </Layout>

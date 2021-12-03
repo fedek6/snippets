@@ -8,6 +8,7 @@ const PlagroundPage = ({ data, location }) => (
   <>
     <Layout
       pageTitle={data.mdx.frontmatter.title}
+      currentSubCategory={data.mdx.frontmatter.subcategory}
       location={location}
       categoryContent={data.allMdx.group}
     >
@@ -21,6 +22,7 @@ export const query = graphql`
     mdx(id: { eq: $id }) {
       frontmatter {
         title
+        subcategory
         date(formatString: "MMMM D, YYYY")
       }
       body
