@@ -9,11 +9,11 @@ const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
 const HeaderSider = ({
-  pageTitle,
+  pageTitle = "",
   children,
   location,
-  categoryContent,
-  currentSubCategory,
+  categoryContent = [],
+  currentSubCategory = "",
 }) => {
   const { pathname } = location;
   // eslint-disable-next-line no-unused-vars
