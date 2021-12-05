@@ -1,11 +1,14 @@
 import * as React from "react";
 import { useStaticQuery, graphql, Link } from "gatsby";
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Menu } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { urlParser } from "../../lib/helpers";
 import { myContext } from "../../Provider";
 import Logo from "../../assets/logo-inverted.svg";
-import { categoryDecorator, subCategoryDecorator } from "../../data/contentDecorators";
+import {
+  categoryDecorator,
+  subCategoryDecorator,
+} from "../../data/contentDecorators";
 import * as style from "./index.module.css";
 
 const { SubMenu } = Menu;
@@ -27,7 +30,7 @@ const HeaderSider = ({
 
   const data = useStaticQuery(graphql`
     query {
-      allMdx {
+      allMdx(filter: { fields: { category: { ne: "content" } } }) {
         categories: distinct(field: fields___category)
         subcategories: distinct(field: frontmatter___subcategory)
       }
@@ -46,7 +49,7 @@ const HeaderSider = ({
         {pageTitle && ` – ${pageTitle}`}
       </title>
       <Layout>
-        <Header className={ ["header", style.navbar] }>
+        <Header className={["header", style.navbar]}>
           <div
             className="logo"
             style={{
@@ -55,14 +58,16 @@ const HeaderSider = ({
               paddingRight: "24px",
             }}
           >
-            <img
-              src={Logo}
-              alt="Realhero logo"
-              style={{
-                width: "32px",
-                height: "auto",
-              }}
-            />
+            <Link to="/">
+              <img
+                src={Logo}
+                alt="Realhero logo"
+                style={{
+                  width: "32px",
+                  height: "auto",
+                }}
+              />
+            </Link>
           </div>
           <Menu theme="dark" mode="horizontal" selectedKeys={currentCategory}>
             {data.allMdx.categories.map((category) => {
@@ -99,10 +104,17 @@ const HeaderSider = ({
                   openKeys={context.openKeys}
                   onOpenChange={(k) => context.setOpenKeys(k)}
                   className="site-layout-background"
+                  selectedKeys={currentSlug}
                 >
                   {categoryContent.map((subCategory) => {
                     const { fieldValue } = subCategory;
-                    const { niceName, icon: Icon } = subCategoryDecorator[fieldValue] ?? { niceName: fieldValue, description: "", icon: UserOutlined };
+                    const { niceName, icon: Icon } = subCategoryDecorator[
+                      fieldValue
+                    ] ?? {
+                      niceName: fieldValue,
+                      description: "",
+                      icon: UserOutlined,
+                    };
 
                     return (
                       <SubMenu
@@ -125,11 +137,6 @@ const HeaderSider = ({
             </myContext.Consumer>
           </Sider>
           <Layout className={style.content}>
-            <Breadcrumb style={{ margin: "16px 0" }}>
-              <Breadcrumb.Item>Home</Breadcrumb.Item>
-              <Breadcrumb.Item>List</Breadcrumb.Item>
-              <Breadcrumb.Item>App</Breadcrumb.Item>
-            </Breadcrumb>
             <Content
               className="site-layout-background"
               style={{
