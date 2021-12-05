@@ -29,7 +29,7 @@ module.exports = {
     {
       resolve: "gatsby-source-filesystem",
       options: {
-        name: "javascript",
+        name: "content",
         path: path.join(__dirname, "content"),
       },
     },
