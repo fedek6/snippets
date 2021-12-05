@@ -1,0 +1,24 @@
+.content {
+  /* background-color: Red; */
+  padding: 64px 24px 24px;
+}
+
+.sider {
+  min-height: calc(100vh - 64px);
+  max-width: 30vw;
+  position: fixed;
+  z-index: 100;
+  top: 64px;
+}
+
+.navbar {
+  position: fixed;
+  width: 100vw;
+  z-index: 101;
+}
+
+@media (min-width: 992px) {
+  .content {
+    padding-left: 300px;
+  }
+}

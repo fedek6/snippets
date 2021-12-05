@@ -5,6 +5,8 @@ import { UserOutlined } from "@ant-design/icons";
 import { urlParser } from "../../lib/helpers";
 import { myContext } from "../../Provider";
 import Logo from "../../assets/logo-inverted.svg";
+import { categoryDecorator, subCategoryDecorator } from "../../data/contentDecorators";
+import * as style from "./index.module.css";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -44,24 +46,37 @@ const HeaderSider = ({
         {pageTitle && ` – ${pageTitle}`}
       </title>
       <Layout>
-        <Header className="header">
-          <div className="logo" style={{
-            float: "left",
-            width: "auto",
-            paddingRight: "24px"
-          }}>
-            <img src={Logo} alt="Realhero logo" style={{
-              width: "32px",
-              height: "auto",
-            }} />
+        <Header className={ ["header", style.navbar] }>
+          <div
+            className="logo"
+            style={{
+              float: "left",
+              width: "auto",
+              paddingRight: "24px",
+            }}
+          >
+            <img
+              src={Logo}
+              alt="Realhero logo"
+              style={{
+                width: "32px",
+                height: "auto",
+              }}
+            />
           </div>
           <Menu theme="dark" mode="horizontal" selectedKeys={currentCategory}>
             {data.allMdx.categories.map((category) => {
               const categoryPath = `/${category}`;
+              const { niceName, description } = categoryDecorator[category] ?? {
+                niceName: category,
+                description: "",
+              };
 
               return (
                 <Menu.Item key={category}>
-                  <Link to={categoryPath}>{category}</Link>
+                  <Link to={categoryPath} title={description}>
+                    {niceName}
+                  </Link>
                 </Menu.Item>
               );
             })}
@@ -71,11 +86,8 @@ const HeaderSider = ({
           <Sider
             breakpoint="lg"
             collapsedWidth="0"
-            width={200}
-            className="site-layout-background"
-            style={{
-              minHeight: "calc(100vh - 64px)"
-            }}
+            width={250}
+            className={["site-layout-background", style.sider]}
           >
             <myContext.Consumer>
               {(context) => (
@@ -85,16 +97,18 @@ const HeaderSider = ({
                   activeKey={currentSlug}
                   defaultOpenKeys={[currentSubCategory]}
                   openKeys={context.openKeys}
-                  onOpenChange={k => context.setOpenKeys(k)}
+                  onOpenChange={(k) => context.setOpenKeys(k)}
+                  className="site-layout-background"
                 >
                   {categoryContent.map((subCategory) => {
                     const { fieldValue } = subCategory;
+                    const { niceName, icon: Icon } = subCategoryDecorator[fieldValue] ?? { niceName: fieldValue, description: "", icon: UserOutlined };
 
                     return (
                       <SubMenu
                         key={fieldValue}
-                        icon={<UserOutlined />}
-                        title={fieldValue}
+                        icon={<Icon />}
+                        title={niceName}
                       >
                         {subCategory.edges.map((edge) => (
                           <Menu.Item key={edge.node.fields.shortSlug}>
@@ -110,7 +124,7 @@ const HeaderSider = ({
               )}
             </myContext.Consumer>
           </Sider>
-          <Layout style={{ padding: "0 24px 24px" }}>
+          <Layout className={style.content}>
             <Breadcrumb style={{ margin: "16px 0" }}>
               <Breadcrumb.Item>Home</Breadcrumb.Item>
               <Breadcrumb.Item>List</Breadcrumb.Item>
