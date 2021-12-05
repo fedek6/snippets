@@ -4,6 +4,7 @@ import { Layout, Menu, Breadcrumb } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { urlParser } from "../../lib/helpers";
 import { myContext } from "../../Provider";
+import Logo from "../../assets/logo-inverted.svg";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -44,7 +45,16 @@ const HeaderSider = ({
       </title>
       <Layout>
         <Header className="header">
-          <div className="logo" />
+          <div className="logo" style={{
+            float: "left",
+            width: "auto",
+            paddingRight: "24px"
+          }}>
+            <img src={Logo} alt="Realhero logo" style={{
+              width: "32px",
+              height: "auto",
+            }} />
+          </div>
           <Menu theme="dark" mode="horizontal" selectedKeys={currentCategory}>
             {data.allMdx.categories.map((category) => {
               const categoryPath = `/${category}`;
@@ -63,6 +73,9 @@ const HeaderSider = ({
             collapsedWidth="0"
             width={200}
             className="site-layout-background"
+            style={{
+              minHeight: "calc(100vh - 64px)"
+            }}
           >
             <myContext.Consumer>
               {(context) => (
