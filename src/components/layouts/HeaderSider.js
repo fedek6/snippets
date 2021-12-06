@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useStaticQuery, graphql, Link } from "gatsby";
 import { Layout, Menu } from "antd";
+import { Helmet } from "react-helmet";
 import { urlParser } from "../../lib/helpers";
 import { myContext } from "../../Provider";
 import Logo from "../../assets/logo-inverted.svg";
@@ -19,6 +20,7 @@ const HeaderSider = ({
   location,
   categoryContent = [],
   currentSubCategory = "",
+  metaDescription = null,
 }) => {
   const { pathname } = location;
   // eslint-disable-next-line no-unused-vars
@@ -36,6 +38,7 @@ const HeaderSider = ({
       site {
         siteMetadata {
           title
+          description
         }
       }
     }
@@ -43,10 +46,16 @@ const HeaderSider = ({
 
   return (
     <>
-      <title>
-        {data.site.siteMetadata.title}
-        {pageTitle && ` – ${pageTitle}`}
-      </title>
+      <Helmet>
+        <title>
+          {data.site.siteMetadata.title}
+          {pageTitle && ` – ${pageTitle}`}
+        </title>
+        <meta
+          name="description"
+          content={metaDescription ?? data.site.siteMetadata.description}
+        />
+      </Helmet>
       <Layout>
         <Header className={["header", style.navbar]}>
           <div
@@ -71,7 +80,8 @@ const HeaderSider = ({
           <Menu theme="dark" mode="horizontal" selectedKeys={currentCategory}>
             {data.allMdx.categories.map((category) => {
               const categoryPath = `/${category}`;
-              const { niceName, description } = categoryDecorator.decorate(category);
+              const { niceName, description } =
+                categoryDecorator.decorate(category);
 
               return (
                 <Menu.Item key={category}>
@@ -137,7 +147,6 @@ const HeaderSider = ({
               }}
             >
               {children}
-              {currentSubCategory}
             </Content>
           </Layout>
         </Layout>

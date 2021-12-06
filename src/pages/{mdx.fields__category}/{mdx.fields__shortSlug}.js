@@ -11,6 +11,7 @@ const PlagroundPage = ({ data, location }) => (
       currentSubCategory={data.mdx.frontmatter.subcategory}
       location={location}
       categoryContent={data.allMdx.group}
+      metaDescription={data.mdx.frontmatter.description}
     >
       <MdxBlock>{data.mdx.body}</MdxBlock>
     </Layout>
@@ -24,6 +25,7 @@ export const query = graphql`
         title
         subcategory
         date(formatString: "MMMM D, YYYY")
+        description
       }
       body
     }
