@@ -51,5 +51,17 @@ module.exports = {
         ],
       },
     },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        icon: "./src/assets/js-logo.svg",
+        name: `Snippets JS & TS`,
+        short_name: `Snippets`,
+        start_url: `/`,
+        background_color: `#1f1f1f`,
+        theme_color: `#177ddc`,
+        display: `standalone`,
+      },
+    },
   ],
 };
