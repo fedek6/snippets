@@ -25,6 +25,11 @@ const subCategoryDecorator = {
     description: "Loop examples",
     icon: UserOutlined,
   },
+  events: {
+    niceName: "Events",
+    description: "Event handling",
+    icon: UserOutlined,
+  },
   decorate(category) {
     return (
       this[category] ?? {

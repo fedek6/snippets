@@ -1,0 +1,24 @@
+---
+title: "Event delegation"
+date: "2021-12-06"
+subcategory: events
+description: "Event delegation example"
+---
+
+# Event delegation
+
+A basic example of modern JS event delegation:
+
+```js
+const selector = ".class-name";
+
+document.addEventListener("click", function(e) {
+  const clikedElement = e.target;
+
+  if (clikedElement.matches(selector)) {
+    console.log("Targeted element was clicked", clikedElement);
+  } else {
+    console.log("Other element was clicked", clikedElement);
+  }
+});
+```
