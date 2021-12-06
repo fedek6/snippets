@@ -1,0 +1,28 @@
+---
+title: "querySelector"
+date: "2021-12-06"
+subcategory: DOM
+description: "query selector method"
+---
+
+# querySelector
+
+`querySelector` allows you to find the first element using CSS compatible selector:
+
+```js
+const dangerButton = document.querySelector("#danger-button");
+```
+
+It allows you to add event listener without any looping:
+
+```js
+dangerButton.addEventListener("click", function (e) {
+  console.log("event", e);
+  console.log("type of element", dangerButton.constructor.name);
+});
+```
+
+## Returned values
+
+* It returns a **NULL** when element cannot be found.
+* It returns an object appropriate to the found item (for eg. **HTMLButtonElement**).
