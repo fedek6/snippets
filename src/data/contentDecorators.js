@@ -9,6 +9,9 @@ const categoryDecorator = {
     niceName: "TypeScript",
     description: "Curated collection of TypeScript snippets",
   },
+  decorate(category) {
+    return this[category] ?? { niceName: category, description: "" };
+  },
 };
 
 const subCategoryDecorator = {
@@ -19,8 +22,17 @@ const subCategoryDecorator = {
   },
   loops: {
     niceName: "Loops",
-    description: "Debug techniques",
+    description: "Loop examples",
     icon: UserOutlined,
+  },
+  decorate(category) {
+    return (
+      this[category] ?? {
+        niceName: category,
+        description: "",
+        icon: UserOutlined,
+      }
+    );
   },
 };
 

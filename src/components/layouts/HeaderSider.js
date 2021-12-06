@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useStaticQuery, graphql, Link } from "gatsby";
 import { Layout, Menu } from "antd";
-import { UserOutlined } from "@ant-design/icons";
 import { urlParser } from "../../lib/helpers";
 import { myContext } from "../../Provider";
 import Logo from "../../assets/logo-inverted.svg";
@@ -72,10 +71,7 @@ const HeaderSider = ({
           <Menu theme="dark" mode="horizontal" selectedKeys={currentCategory}>
             {data.allMdx.categories.map((category) => {
               const categoryPath = `/${category}`;
-              const { niceName, description } = categoryDecorator[category] ?? {
-                niceName: category,
-                description: "",
-              };
+              const { niceName, description } = categoryDecorator.decorate(category);
 
               return (
                 <Menu.Item key={category}>
@@ -108,13 +104,8 @@ const HeaderSider = ({
                 >
                   {categoryContent.map((subCategory) => {
                     const { fieldValue } = subCategory;
-                    const { niceName, icon: Icon } = subCategoryDecorator[
-                      fieldValue
-                    ] ?? {
-                      niceName: fieldValue,
-                      description: "",
-                      icon: UserOutlined,
-                    };
+                    const { niceName, icon: Icon } =
+                      subCategoryDecorator.decorate(fieldValue);
 
                     return (
                       <SubMenu

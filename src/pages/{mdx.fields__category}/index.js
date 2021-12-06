@@ -1,6 +1,8 @@
 import * as React from "react";
 import { graphql } from "gatsby";
+import { Typography } from "antd";
 import Layout from "../../components/layouts/HeaderSider";
+import { subCategoryDecorator } from "../../data/contentDecorators";
 
 // markup
 const PlagroundPage = ({ data, location }) => (
@@ -15,6 +17,21 @@ const PlagroundPage = ({ data, location }) => (
           <h2>{node.frontmatter.title}</h2>
         </article>
       ))}
+
+      {data.allMdx.group.map((subCategory) => {
+        const { fieldValue } = subCategory;
+        const { niceName, description } =
+          subCategoryDecorator.decorate(fieldValue);
+
+        return (
+          <>
+            <Typography.Title key={fieldValue} level={2}>
+              {niceName}
+            </Typography.Title>
+            <Typography.Paragraph>{description}</Typography.Paragraph>
+          </>
+        );
+      })}
     </Layout>
   </>
 );
