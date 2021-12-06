@@ -46,12 +46,6 @@ module.exports = {
               linkImagesToOriginal: false,
             },
           },
-          {
-            resolve: "gatsby-remark-image-attributes",
-            options: {
-              // dataAttributes: false
-            }
-          }
         ],
       },
     },
