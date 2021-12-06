@@ -144,6 +144,7 @@ const HeaderSider = ({
                 padding: 24,
                 margin: 0,
                 minHeight: 280,
+                maxWidth: "1000px"
               }}
             >
               {children}
