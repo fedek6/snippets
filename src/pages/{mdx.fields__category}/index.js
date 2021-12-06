@@ -1,6 +1,6 @@
 import * as React from "react";
-import { graphql } from "gatsby";
-import { Typography } from "antd";
+import { graphql, Link } from "gatsby";
+import { Typography, Divider } from "antd";
 import Layout from "../../components/layouts/HeaderSider";
 import { subCategoryDecorator } from "../../data/contentDecorators";
 
@@ -12,12 +12,6 @@ const PlagroundPage = ({ data, location }) => (
       location={location}
       categoryContent={data.allMdx.group}
     >
-      {data.allMdx.nodes.map((node) => (
-        <article key={node.id}>
-          <h2>{node.frontmatter.title}</h2>
-        </article>
-      ))}
-
       {data.allMdx.group.map((subCategory) => {
         const { fieldValue } = subCategory;
         const { niceName, description } =
@@ -29,6 +23,20 @@ const PlagroundPage = ({ data, location }) => (
               {niceName}
             </Typography.Title>
             <Typography.Paragraph>{description}</Typography.Paragraph>
+            {subCategory.edges.map((edge) => {
+              const { frontmatter, slug } = edge.node;
+
+              return (
+                <li key="1">
+                  <Link to={`/${slug}`}>{frontmatter.title}</Link>
+                  <Typography.Text keyboard>{frontmatter.date}</Typography.Text>
+                  <Typography.Paragraph>
+                    {frontmatter.description}
+                  </Typography.Paragraph>
+                </li>
+              );
+            })}
+            <Divider />
           </>
         );
       })}
@@ -44,14 +52,6 @@ export const query = graphql`
       filter: { fields: { category: { eq: $fields__category } } }
       sort: { fields: frontmatter___date, order: DESC }
     ) {
-      nodes {
-        frontmatter {
-          date(formatString: "MMMM D, YYYY")
-          title
-        }
-        id
-        body
-      }
       group(field: frontmatter___subcategory) {
         fieldValue
         edges {
@@ -59,9 +59,12 @@ export const query = graphql`
             frontmatter {
               title
               subcategory
+              date(formatString: "MMMM D, YYYY")
+              description
             }
             fields {
               shortSlug
+              category
             }
             slug
           }
