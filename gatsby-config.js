@@ -33,8 +33,27 @@ module.exports = {
         path: path.join(__dirname, "content"),
       },
     },
+    "gatsby-plugin-sharp",
+    "gatsby-remark-images",
     {
       resolve: "gatsby-plugin-mdx",
+      options: {
+        gatsbyRemarkPlugins: [
+          {
+            resolve: "gatsby-remark-images",
+            options: {
+              maxWidth: 1200,
+              linkImagesToOriginal: false,
+            },
+          },
+          {
+            resolve: "gatsby-remark-image-attributes",
+            options: {
+              // dataAttributes: false
+            }
+          }
+        ],
+      },
     },
   ],
 };
