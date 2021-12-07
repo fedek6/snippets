@@ -30,6 +30,11 @@ const subCategoryDecorator = {
     description: "Event handling",
     icon: UserOutlined,
   },
+  math: {
+    niceName: "Math",
+    description: "Math object",
+    icon: UserOutlined,
+  },
   decorate(category) {
     return (
       this[category] ?? {

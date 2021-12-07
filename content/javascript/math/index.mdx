@@ -1,0 +1,26 @@
+---
+title: "Random number in the range"
+date: "2021-12-07"
+subcategory: math
+description: "Random number in the range"
+---
+
+# Random numbers
+
+Random integer between min (included) and max (included):
+
+```js
+const min = 1;
+const max = 3;
+
+Math.floor(Math.random() * (max - min + 1)) + min;
+```
+
+Any random number (even float) between min (included) and max (not included):
+
+```js
+const min = 1;
+const max = 3;
+
+Math.random() * (max - min) + min;
+```
