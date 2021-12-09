@@ -1,0 +1,5 @@
+{
+    "componentChunkName": "component---src-pages-mdx-fields-category-index-js",
+    "path": "/snippets/",
+    "result": {"data":{"allMdx":{"group":[{"fieldValue":"content","edges":[{"node":{"frontmatter":{"title":"Hello!","date":"July 23, 2021","description":null},"fields":{"shortSlug":"home","subCategory":"content","category":"snippets"},"slug":"home"}}],"totalCount":1}]}},"pageContext":{"id":"cead61c4-f1aa-5095-a74c-26da2dd49bd2","fields__category":"snippets","__params":{"fields__category":"snippets"}}},
+    "staticQueryHashes": ["2420640694"]}
