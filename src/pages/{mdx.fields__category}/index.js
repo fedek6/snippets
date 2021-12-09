@@ -52,18 +52,18 @@ export const query = graphql`
       filter: { fields: { category: { eq: $fields__category } } }
       sort: { fields: frontmatter___date, order: DESC }
     ) {
-      group(field: frontmatter___subcategory) {
+      group(field: fields___subCategory) {
         fieldValue
         edges {
           node {
             frontmatter {
               title
-              subcategory
               date(formatString: "MMMM D, YYYY")
               description
             }
             fields {
               shortSlug
+              subCategory
               category
             }
             slug

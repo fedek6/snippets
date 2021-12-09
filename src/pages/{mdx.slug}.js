@@ -1,14 +1,14 @@
 import * as React from "react";
 import { graphql } from "gatsby";
-import MdxBlock from "../../components/mdx/MdxBlock";
-import Layout from "../../components/layouts/HeaderSider";
+import MdxBlock from "../components/mdx/MdxBlock";
+import Layout from "../components/layouts/HeaderSider";
 
 // markup
 const PlagroundPage = ({ data, location }) => (
   <>
     <Layout
       pageTitle={data.mdx.frontmatter.title}
-      currentSubCategory={data.mdx.frontmatter.subcategory}
+      currentSubCategory={data.mdx.fields.subCategory}
       location={location}
       categoryContent={data.allMdx.group}
       metaDescription={data.mdx.frontmatter.description}
@@ -27,6 +27,9 @@ export const query = graphql`
         date(formatString: "MMMM D, YYYY")
         description
       }
+      fields {
+        subCategory
+      }
       body
     }
     allMdx(filter: { fields: { category: { eq: $fields__category } } }) {
@@ -36,10 +39,10 @@ export const query = graphql`
           node {
             frontmatter {
               title
-              subcategory
             }
             fields {
               shortSlug
+              subCategory
             }
             slug
           }

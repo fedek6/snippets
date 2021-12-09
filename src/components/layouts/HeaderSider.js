@@ -31,9 +31,9 @@ const HeaderSider = ({
 
   const data = useStaticQuery(graphql`
     query {
-      allMdx(filter: { fields: { category: { ne: "content" } } }) {
+      allMdx(filter: { fields: { category: { ne: "snippets" } } }) {
         categories: distinct(field: fields___category)
-        subcategories: distinct(field: frontmatter___subcategory)
+        subcategories: distinct(field: fields___subCategory)
       }
       site {
         siteMetadata {
