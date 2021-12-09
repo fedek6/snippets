@@ -35,6 +35,11 @@ const subCategoryDecorator = {
     description: "Math object",
     icon: UserOutlined,
   },
+  dom: {
+    niceName: "DOM",
+    description: "HTML DOM API",
+    icon: UserOutlined,
+  },
   decorate(category) {
     return (
       this[category] ?? {

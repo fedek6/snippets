@@ -1,7 +1,7 @@
 import * as React from "react";
 import { graphql } from "gatsby";
-import MdxBlock from "../components/mdx/MdxBlock";
-import Layout from "../components/layouts/HeaderSider";
+import MdxBlock from "../../../components/mdx/MdxBlock";
+import Layout from "../../../components/layouts/HeaderSider";
 
 // markup
 const PlagroundPage = ({ data, location }) => (
@@ -23,7 +23,6 @@ export const query = graphql`
     mdx(id: { eq: $id }) {
       frontmatter {
         title
-        subcategory
         date(formatString: "MMMM D, YYYY")
         description
       }
@@ -33,7 +32,7 @@ export const query = graphql`
       body
     }
     allMdx(filter: { fields: { category: { eq: $fields__category } } }) {
-      group(field: frontmatter___subcategory) {
+      group(field: fields___subCategory) {
         fieldValue
         edges {
           node {
