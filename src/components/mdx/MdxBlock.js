@@ -7,16 +7,19 @@ import CodeBlock from "./components/CodeBlock";
 const { Title, Paragraph, Text } = Typography;
 
 const components = {
-  code: ({ children }) => (<Text code>{ children }</Text>),
+  code: ({ children }) => <Text code>{children}</Text>,
   pre: CodeBlock,
   p: Paragraph,
+  a: ({ children, href }) => (
+    <a href={href} target="_blank" rel="noreferrer">
+      {children}
+    </a>
+  ),
 };
 
 for (let i = 1; i <= 6; i += 1) {
-  components[`h${i}`] = ({ children }) => (
-    <Title level={i}>{children}</Title>
-  );
-};
+  components[`h${i}`] = ({ children }) => <Title level={i}>{children}</Title>;
+}
 
 const MdxBlock = ({ children }) => (
   <MDXProvider components={components}>
