@@ -28,9 +28,17 @@ const CodeBlock = (props) => {
       }) => (
         <pre
           className={preClassName}
-          style={{ ...style, padding: "20px", position: "relative" }}
+          style={{
+            ...style,
+            padding: "20px",
+            position: "relative",
+            whiteSpace: "pre-wrap",
+          }}
         >
-          <CopyButton codeString={code} style={{position: "absolute", right: "20px" }} />
+          <CopyButton
+            codeString={code}
+            style={{ position: "absolute", right: "20px" }}
+          />
           {tokens.map((line, i) => (
             <div key={i} {...getLineProps({ line, key: i })}>
               {line.map((token, key) => (
