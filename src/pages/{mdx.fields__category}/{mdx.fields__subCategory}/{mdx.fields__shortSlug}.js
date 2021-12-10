@@ -31,7 +31,10 @@ export const query = graphql`
       }
       body
     }
-    allMdx(filter: { fields: { category: { eq: $fields__category } } }) {
+    allMdx(
+      filter: { fields: { category: { eq: $fields__category } } }
+      sort: { fields: frontmatter___date, order: DESC }
+    ) {
       group(field: fields___subCategory) {
         fieldValue
         edges {
