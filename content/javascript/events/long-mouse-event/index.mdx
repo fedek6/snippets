@@ -1,0 +1,38 @@
+---
+title: "Long mouse event"
+date: "2021-12-10"
+description: "Capture longer mouse press"
+---
+
+# Capture longer mouse press
+
+There's a problem when you want to capture a longer mouse press using `mousedown` and `mouseup`. When user moves a cursor outside of the target, event does not fire as intended.
+
+Here's a simple solution. You need to capture `mouseup` event also outside of the original target.
+
+Demo available [here](https://jsfiddle.net/fedek6/w5hngvqe/7/).
+
+```js
+const button = document.querySelector("button");
+
+document.addEventListener("mousedown", (e) => {
+  const { target } = e;
+
+  if (target.matches("button")) {
+    console.log("button pressed");
+    button.classList.add("-active");
+  }
+});
+
+document.addEventListener("mouseup", (e) => {
+  const { target } = e;
+
+  button.classList.remove("-active");
+
+  if (target.matches("button")) {
+    console.log("button depressed");
+  } else {
+    console.log("depressed outside");
+  }
+});
+```
