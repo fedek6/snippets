@@ -43,7 +43,7 @@ const subCategoryDecorator = {
   decorate(category) {
     return (
       this[category] ?? {
-        niceName: category,
+        niceName: category.charAt(0).toUpperCase() + category.slice(1),
         description: "",
         icon: UserOutlined,
       }
