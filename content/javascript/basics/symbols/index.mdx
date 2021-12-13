@@ -1,0 +1,58 @@
+---
+title: "Symbols"
+date: "2021-12-13"
+description: "Symbols usage examples"
+---
+
+# Symbols
+
+Symbols are used as non string representation of object property names:
+
+```js
+const symName = Symbol("Cholibka");
+const name = "Cholibka";
+
+const o = {
+	[symName]: "Symbol Hagrid!",
+	[name]: "Not a symbol Hagrid!"
+}
+
+console.log(o[symName]);
+console.log(o[name]);
+```
+
+## Equality
+
+Symbols with the same string always have different values:
+
+```js
+const symName = Symbol("Cholibka");
+const symName2 = Symbol("Cholibka");
+
+console.log(symName === symName2); // false
+```
+
+But we can use `Symbol's` `for` method:
+
+```js
+const globalSymbol1 = Symbol.for("Cholibka");
+const globalSymbol2 = Symbol.for("Cholibka");
+
+console.log(globalSymbol1 === globalSymbol2); // true
+console.log(symName === globalSymbol2); // false
+```
+
+## Famous symbols
+
+The well-known `Symbol.iterator` symbol specifies the default iterator for an object. Used by `for...of`.
+
+```js
+const someObj = {
+  *[Symbol.iterator]() {
+    yield "a";
+    yield "b";
+  }
+}
+
+console.log(...someObj); // a b
+```
