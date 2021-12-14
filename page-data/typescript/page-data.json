@@ -1,5 +1,5 @@
 {
     "componentChunkName": "component---src-pages-mdx-fields-category-index-js",
     "path": "/typescript/",
-    "result": {"data":{"allMdx":{"group":[{"fieldValue":"basics","edges":[{"node":{"frontmatter":{"title":"Basic classes","date":"December 14, 2021","description":"Classes in TS"},"fields":{"shortSlug":"classes","subCategory":"basics","category":"typescript"},"slug":"typescript/basics/classes/"}}],"totalCount":1}]}},"pageContext":{"id":"0cf7c72a-d442-5f99-ac44-68c0b5814ee5","fields__category":"typescript","__params":{"fields__category":"typescript"}}},
+    "result": {"data":{"allMdx":{"group":[{"fieldValue":"basics","edges":[{"node":{"frontmatter":{"title":"Basic classes","date":"December 14, 2021","description":"Classes in TS"},"fields":{"shortSlug":"classes","subCategory":"basics","category":"typescript"},"slug":"typescript/basics/classes/"}},{"node":{"frontmatter":{"title":"Maps","date":"December 14, 2021","description":"Maps in TS"},"fields":{"shortSlug":"maps","subCategory":"basics","category":"typescript"},"slug":"typescript/basics/maps/"}}],"totalCount":2}]}},"pageContext":{"id":"0cf7c72a-d442-5f99-ac44-68c0b5814ee5","fields__category":"typescript","__params":{"fields__category":"typescript"}}},
     "staticQueryHashes": ["2420640694"]}
