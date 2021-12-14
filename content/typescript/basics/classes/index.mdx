@@ -1,0 +1,37 @@
+---
+title: "Basic classes"
+date: "2021-12-14"
+description: "Classes in TS"
+---
+
+# Basic classes
+
+Standard:
+
+```ts
+export class TodoItem {
+  public id: number;
+  public task: string;
+  public complete: boolean = false;
+
+  public constructor(id: number, task: string, complete: boolean = false) {
+    this.id = id;
+    this.task = task;
+    this.complete = complete;
+  }
+}
+```
+
+Concise version:
+
+```ts
+export class TodoItem {
+    constructor(public id: number,
+                public task: string,
+                public complete: boolean = false) {
+      // no statements required
+    }
+}
+```
+
+__Notice:__ Access control keywords are provided by the `TypeScript`. In `JavaScript` you can declare private fields using `#` symbol. More info is available [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_class_fields).
