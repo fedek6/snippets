@@ -1,0 +1,67 @@
+---
+title: "Maps"
+date: "2021-12-14"
+description: "Maps in TS"
+---
+
+# Maps
+
+The Map object holds key-value pairs and remembers the original insertion order of the keys.
+
+```ts
+class Task {
+  constructor(public id: number, public task: string, public complete: bolean = false) {}
+
+	toString() {
+		const {id, task, complete} = this;
+
+		return `${id} ${task} ${complete}`;
+	}
+}
+
+type TaskMap = Map<number, Task>;
+
+class TaskCollection {
+  private nextId: number = 1;
+  private taskMap: TaskMap = new Map();
+
+  addTask(task: string): number {
+		while (this.getTaskById(this.nextId)) {
+			this.nextId++;
+		}
+		this.taskMap.set(this.nextId, new Task(this.nextId, task));
+
+		return this.nextId;
+  }
+
+	getTaskById(id: number): Task {
+		return this.taskMap.get(id);
+	}
+
+	getAllTasks(): TaskMap {
+		return this.taskMap;
+	}
+}
+
+const myTaskCollection = new TaskCollection();
+myTaskCollection.addTask("Swim in the ocean");
+myTaskCollection.addTask("Catch the dragon");
+
+
+const allTasks = myTaskCollection.getAllTasks();
+
+// If you don't know if you can iterate object:
+// typeof allTasks[Symbol.iterator] === “function”
+for([key, value] of allTasks) {
+	console.log(value);
+}
+```
+
+Check [live demo](https://jsfiddle.net/fedek6/t13z70q2/).
+
+## When to use Maps?
+
+* When adding and removing a lot of items.
+* When order of added items is important.
+* When you need simple iteration (`for of` or `foreach`).
+* Maps are faster when storing large collections.
