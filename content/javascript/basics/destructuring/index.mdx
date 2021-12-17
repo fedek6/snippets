@@ -1,0 +1,35 @@
+---
+title: "Destructuring assignment"
+date: "2021-12-17"
+description: "Destructuring assignment"
+---
+import LiveExample from "components/LiveExample/LiveExample";
+
+# Destructuring assignment
+
+<LiveExample link="https://jsfiddle.net/fedek6/uhrky0a6/" />
+
+Can be used to extract single values from arrays and objects.
+
+```js
+// Array
+const [x, y] = [1, 2];
+console.log(x, y);
+
+// Array with omit
+const [a,,z] = [1, 2, 3];
+console.log(a,z);
+
+// Array slice
+const [b, ...rest] = [1, 2, 3, 4, 5];
+console.log("b", b);
+console.log("rest", rest);
+
+// Objects
+let {foo, bar} = {foo: "foo", bar: "bar"};
+console.log(foo, bar);
+
+// Change name
+let {foo: baz, bar: foz} = {foo: "foo", bar: "bar"};
+console.log(baz, foz);
+```
