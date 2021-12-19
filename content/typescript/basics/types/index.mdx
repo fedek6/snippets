@@ -1,0 +1,61 @@
+---
+title: "The basics of types"
+date: "2021-12-19"
+description: "The basics of types"
+---
+
+# The basics of types
+
+## Type annotations
+
+Basic example. Annotiate parameter and function output.
+
+```ts
+function calculateTax(amount: number): number {
+  return amount * 1.2;
+}
+```
+
+## Implicitly defined types
+
+```ts
+function calculateTax(amount: number) {
+  return amount * 1.2;
+}
+```
+
+TypeScript will automatically determine type of the returned value.
+
+When you set `declaration` config variable to `true`, compiler will generate file with types used in your code. This might be useful for debugging.
+
+## Using `any` type
+
+Using `any` will stop compiler from checking the type.
+
+`any` can be assigned to any other type:
+
+```ts
+let newResult: any = calculateTax(200);
+let myNumber: number = newResult;
+console.log(`Number value: ${myNumber.toFixed(2)}`);
+```
+
+**Notice**: `any` is like a ugly hack in TS. If compiler cannot determine implicitly variable type, it will be `any`.
+
+**Notice**: You can disable this default behavior by using `noImplicityAny` option.
+
+## Simple unions
+
+Output of this function might be a `string` or a `number`.
+
+```ts
+function calculateTax(amount: number, format: boolean): string | number {
+  const calcAmount = amount * 1.2;
+  return format ? `${calcAmount.toFixed(2)}` : calcAmount;
+}
+
+let taxNumber = calculateTax(100, false);
+let taxString = calculateTax(100, true);
+```
+
+**Notice**: it depends on a `format` parameter.

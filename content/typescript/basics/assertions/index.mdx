@@ -1,0 +1,50 @@
+---
+title: "Assertions"
+date: "2021-12-19"
+description: "The basics of assertions"
+---
+import LiveExample from "components/LiveExample/LiveExample";
+
+# The basics of assertions
+
+<LiveExample link="https://jsfiddle.net/fedek6/yc2tb9um/" />
+
+Using type assertions is like being smarter that TS compiler. In fact, you're telling compiler that returned value is a specific type.
+
+```ts
+let taxNumber = calculateTax(100, false) as number;
+let taxString = calculateTax(100, true) as string;
+console.log(`Number Value: ${taxNumber.toFixed(2)}`);
+console.log(`String Value: ${taxString.charAt(0)}`);
+```
+
+**Attention!** No conversion is used when asserting a type. This is information is used only by the compiler.
+
+Asserted types can be selected from returned union:
+
+```ts
+function calculateTax(amount: number, format: boolean): string | number {
+  const calcAmount = amount * 1.2;
+  return format ? `${calcAmount.toFixed(2)}` : calcAmount;
+}
+
+// Assert as a string
+const taxString = calculateTax(100.455, true) as string;
+console.log(taxString.constructor.name, taxString);
+
+// Assert as a number
+const taxFloat = calculateTax(100.455, false) as number;
+console.log(taxFloat.constructor.name, taxFloat);
+
+// Alternative assertion syntax
+const tax = <number>calculateTax(1214.1, false);
+console.log(tax.constructor.name, tax);
+```
+
+## Forced assertions
+
+If you want to assert forcibly you can use this trick:
+
+```ts
+let taxBoolean = calculateTax(100, false) as any as boolean;
+```
