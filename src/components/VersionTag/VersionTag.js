@@ -1,30 +1,36 @@
 import * as React from "react";
-import { Tag } from "antd";
+import { Tag, Divider } from "antd";
 
 const ecmaVersions = {
   es6: {
     short: "ES6",
     long: "ES2015",
+    icon: "👌",
   },
   es7: {
     short: "ES7",
     long: "ES2016",
+    icon: "👩‍🔬",
   },
   es8: {
     short: "ES8",
     long: "ES2017",
+    icon: "👩‍🔬",
   },
   es9: {
     short: "ES9",
     long: "ES2018",
+    icon: "⚠️",
   },
   es10: {
     short: "ES10",
     long: "ES2019",
+    icon: "⚠️",
   },
   es11: {
     short: "ES11",
     long: "ES2020",
+    icon: "⚠️",
   },
   find(id) {
     const a = Object.entries(this)
@@ -38,20 +44,22 @@ const ecmaVersions = {
 };
 
 const VersionTag = ({ version }) => {
-  const { long, short } = ecmaVersions.find(version);
+  const { long, short, icon } = ecmaVersions.find(version);
 
   return (
-    <div>
+    <>
+      <Divider />
       <Tag color="geekblue">
         <a
           href="https://github.com/sudheerj/ECMAScript-features"
           target="_blank"
           rel="noreferrer"
         >
-          💻 <strong>{`${long} | ${short}`}</strong>
+          {`${icon} ECMAScript:`} <strong>{`${long} | ${short}`}</strong>
         </a>
       </Tag>
-    </div>
+      <Divider />
+    </>
   );
 };
 
