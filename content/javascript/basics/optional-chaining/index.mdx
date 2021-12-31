@@ -1,0 +1,29 @@
+---
+title: "Optional chaining"
+date: "2021-12-31"
+description: "Optional chaining example"
+---
+import LiveExample from "components/LiveExample/LiveExample";
+import VersionTag from "components/VersionTag/VersionTag";
+
+# Optional chaining
+
+<VersionTag version="es11" />
+
+The optional chaining operator (?.) enables you to read the value of a property located deep within a chain of connected objects without having to check that each reference in the chain is valid.
+
+If any chain link with `?` is `null` or `undefined` the whole expression will return `undefined`.
+
+```js
+const test = {
+	a: {
+		b: {
+			c: "last"
+		}
+	}
+}
+
+console.log(test.a.b.c); // undefined
+console.log(test.a.b.c?.d); // undefined
+console.log(test.a.b.c?.d?.e); // undefined
+```
