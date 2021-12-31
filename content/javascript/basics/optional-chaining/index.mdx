@@ -18,12 +18,16 @@ If any chain link with `?` is `null` or `undefined` the whole expression will re
 const test = {
 	a: {
 		b: {
-			c: "last"
+			c: "last",
+      test() {
+        return "foo";
+      }
 		}
 	}
 }
 
 console.log(test.a.b.c); // "last"
-console.log(test.a.b.c?.d); // undefined
-console.log(test.a.b.c?.d?.e); // undefined
+console.log(test.a.b.c.d?.e); // undefined
+console.log(test.a.b.c.test?.()); // "foo"
+console.log(test.a.b.test?.()); // undefined
 ```
