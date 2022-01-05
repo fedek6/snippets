@@ -1,0 +1,25 @@
+---
+title: "Nullish Coalescing Operator"
+date: "2022-01-05"
+description: "Nullish Coalescing operator example"
+---
+
+import LiveExample from "components/LiveExample/LiveExample";
+import VersionTag from "components/VersionTag/VersionTag";
+
+# Nullish Coalescing Operator
+
+<VersionTag version="es11" />
+
+The nullish coalescing operator `??` is a logical operator that returns its right-hand side operand when its left-hand side operand is `null` or `undefined`.
+
+This allows you to return default value.
+
+```js
+const defaultCar = "Toyota Auris";
+let myCurrentCar;
+
+const myCar = myCurrentCar ?? defaultCar;
+
+console.log(myCar); // Toyota Auris
+```

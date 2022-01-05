@@ -1,0 +1,21 @@
+---
+title: "in operator"
+date: "2022-01-05"
+description: "Usage of in operator"
+---
+import LiveExample from "components/LiveExample/LiveExample";
+
+# in operator
+
+<LiveExample link="https://jsfiddle.net/fedek6/1mvrhgq7/" />
+
+This operator returns `true` if left operand exists in right operand (object).
+
+```js
+const testObject = {
+	foo: true
+};
+
+console.log("foo" in testObject); // true
+console.log("bar" in testObject); // false
+```
