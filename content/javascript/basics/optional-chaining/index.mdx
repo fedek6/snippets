@@ -28,6 +28,11 @@ const test = {
 
 console.log(test.a.b.c); // "last"
 console.log(test.a.b.c.d?.e); // undefined
+```
+
+This can be also used with functions:
+
+```js
 console.log(test.a.b.test?.()); // "foo"
 console.log(test.a.b.c.test?.()); // undefined
 ```
