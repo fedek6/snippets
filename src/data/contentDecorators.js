@@ -45,6 +45,11 @@ const subCategoryDecorator = {
     description: "Basic language concepts",
     icon: QuestionOutlined,
   },
+  "data-types": {
+    niceName: "Data types",
+    description: "More complex data types in TS",
+    icon: BulbOutlined,
+  },
   decorate(category) {
     return (
       this[category] ?? {
