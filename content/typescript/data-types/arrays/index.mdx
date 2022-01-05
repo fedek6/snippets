@@ -51,3 +51,45 @@ This will be typed as `any` which is a very bad practice:
 ```ts
 let prices = [];
 ```
+
+## Tuples
+
+Tuples are special type of arrays. They have fixed length and must be annotiated:
+
+```ts
+let helloTuple: [string, number] = ["foo", 100];
+
+helloTuple.forEach((e: string | number) => { console.log(e) });
+```
+
+### Tuple types
+
+You can create an array of tuples:
+
+```ts
+let products: [string, number][] = [
+  ["Hat", 100],
+  ["Gloves", 75],
+];
+```
+
+And then unionize typle with other type:
+
+```ts
+let tupleUnion: ([string, number] | boolean)[] = [
+  true,
+  false,
+  ...products,
+];
+```
+
+Also you can create an alias of a tuple:
+
+```ts
+type tupleType = [string, number];
+
+let products: tupleType[] = [
+  ["Hat", 100],
+  ["Gloves", 75],
+];
+```
