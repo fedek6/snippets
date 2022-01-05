@@ -23,3 +23,15 @@ const myCar = myCurrentCar ?? defaultCar;
 
 console.log(myCar); // Toyota Auris
 ```
+
+## Differences between logical `OR` and coalescing operator
+
+Logical `OR` checks for `nullish` values instead of `falsy` values:
+
+```js
+const foo = "";
+const bar = 0;
+
+console.log(foo || "default"); // default
+console.log(bar || 1); // 1
+```
