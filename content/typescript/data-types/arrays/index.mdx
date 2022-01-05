@@ -1,0 +1,53 @@
+---
+title: "Arrays"
+date: "2022-01-05"
+description: "The basics of arrays"
+---
+
+# Arrays
+
+TypeScript doesn't change the flexible sizing of arrays, but it does allow the data types they contain to be restricted through the use of type annotations.
+
+```ts
+let prices: number[] = [100, 75, 42];
+let names: string[] = ["Hat", "Gloves", "Umbrella"];
+
+prices.forEach((price: number, index: number) => {
+  console.log(names[index], calculateTax(price));
+});
+```
+
+This can be typed using alternative syntax:
+
+```ts
+let prices: Array<number> = [100, 75, 42];
+let names: Array<string> = ["Hat", "Gloves", "Umbrella"];
+```
+
+**Warning!** This will bring error in tsx files.
+
+## Array good practices
+
+### ✔️ Avoid using inferred array types
+
+As you can see, this might lead to mistakes:
+
+```ts
+// declare let prices: (string | number)[]
+let prices = [100, 75, 42, "20"];
+
+const calculateTax = (prices: Array<number>): Array<number> => {
+  return prices.map((price) => price * 0.23);
+};
+
+// ❌ Argument of type '(string | number)[]' is not assignable to parameter of type 'number[]'
+calculateTax(prices);
+```
+
+### ✔️ Always type empty arrays
+
+This will be typed as `any` which is a very bad practice:
+
+```ts
+let prices = [];
+```
