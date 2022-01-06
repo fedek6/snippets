@@ -1,0 +1,148 @@
+---
+title: "Enums"
+date: "2022-01-06"
+description: "How to use enums"
+---
+
+# Enums
+
+`Enum` is a collection of elements that for readability can be used by keys (names).
+
+```ts
+enum Product {
+  Foo,
+  Bar,
+  FooBar,
+}
+
+console.log(Product.Foo); // 0
+console.log(Product.Bar); // 1
+console.log(Product.FooBar); // 2
+
+// Reverse mapping
+const productName = Product[Product.Foo];
+console.log(productName); // Foo
+```
+
+As you can see `enum` simply stores numeric value in a key.
+
+## Specific value enums
+
+```ts
+enum Product {
+  Hat,
+  Gloves = 20,
+  Umbrella,
+}
+```
+
+Means:
+
+```ts
+declare enum Product {
+  Hat = 0,
+  Gloves = 20,
+  Umbrella = 21,
+}
+```
+
+**Warning!** Compiler can duplicate values and overwrite them this way.
+
+**Attention!** These features can be useful, but close attention is required to avoid accidentally creating duplicate values or unexpected results. Keep Enums simple and leave the compiler to generate numbers wherever possible.
+
+## String enums
+
+Enums can store strings also:
+
+```ts
+enum City {
+  London = "London",
+  Paris = "Paris",
+  NY = "New York",
+}
+console.log(`${City.NY}`); // New York
+```
+
+## Possible problems with enums
+
+This won't break compilation:
+
+```ts
+enum FooBar {
+  Foo = 1,
+  Bar = 2
+}
+
+const testValue: FooBar = 0; // There's no 0 value in FooBar!
+```
+
+Also you won't be able to type guard an `enum`:
+
+```ts
+enum Product {
+  Hat,
+  Gloves,
+  Umbrella,
+}
+
+let productValue: Product = Product.Hat;
+if (typeof productValue === "number") {
+  console.log("Value is a number");
+}
+
+let unionValue: number | Product = Product.Hat;
+if (typeof unionValue === "number") {
+  console.log("Value is a number");
+}
+```
+
+## Constant enums
+
+Constant enums are only compiler directives.
+
+```ts
+const enum Product {
+  Hat,
+  Gloves,
+  Umbrella,
+}
+
+console.log(Product.Hat);
+```
+
+Compiles into:
+
+```js
+"use strict";
+console.log(0 /* Hat */);
+```
+
+**Attention!** This is an advanced feature that is rarely required in most projects. Performance is faster in constant Enums.
+
+## How enums work in js
+
+Previous example compiles to:
+
+```js
+var Product;
+(function (Product) {
+    Product[Product["Foo"] = 0] = "Foo";
+    Product[Product["Bar"] = 1] = "Bar";
+    Product[Product["FooBar"] = 2] = "FooBar";
+})(Product || (Product = {}));
+```
+
+This snippet simply modifies `Product` variable to be this object:
+
+```js
+{
+    "0": "Foo",
+    "1": "Bar",
+    "2": "FooBar",
+    "Foo": 0,
+    "Bar": 1,
+    "FooBar": 2
+}
+```
+
+It uses [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) to modify empty var. In one line it generates two types of keys. This shows how smart are *TypeScript* developers 🤯

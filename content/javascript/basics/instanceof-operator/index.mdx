@@ -1,0 +1,32 @@
+---
+title: "instanceof operator"
+date: "2022-01-06"
+description: "instanceof operator example"
+---
+
+import LiveExample from "components/LiveExample/LiveExample";
+
+# instanceof operator
+
+<LiveExample link="https://jsfiddle.net/fedek6/so4hn36g/" />
+
+The `instanceof` operator tests to see if the prototype property of a constructor appears anywhere in the prototype chain of an object.
+
+```js
+const d = new Date();
+console.log(d instanceof Date); // true
+console.log(d instanceof Object); // true
+console.log(d instanceof Number); // false
+
+class Rectangle {
+  constructor(height, width) {
+    this.height = height;
+    this.width = width;
+  }
+}
+
+const r = new Rectangle(100, 100);
+console.log(r instanceof Rectangle)  // true
+console.log(r instanceof Object); // true
+console.log(d instanceof URLSearchParams); // false
+```
