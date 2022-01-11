@@ -1,0 +1,229 @@
+---
+title: "Promises"
+date: "2022-01-11"
+description: "All you need to know about promises"
+---
+
+import LiveExample from "components/LiveExample/LiveExample";
+import VersionTag from "components/VersionTag/VersionTag";
+
+# Promises
+
+<VersionTag version="es6" />
+
+Promises are fundamental for working with asynchronous code. Promise is an object representing eventual completion or failure of operation (and its returned value).
+
+**Notice:** this method of dealing with asynchronous code was created because using a lot of callbacks makes code very messy.
+
+## Example of a **Callback Hell**:
+
+```js
+fs.readdir(source, function (err, files) {
+  if (err) {
+    console.log("Error finding files: " + err);
+  } else {
+    files.forEach(function (filename, fileIndex) {
+      console.log(filename);
+      gm(source + filename).size(function (err, values) {
+        if (err) {
+          console.log("Error identifying file size: " + err);
+        } else {
+          console.log(filename + " : " + values);
+          aspect = values.width / values.height;
+          widths.forEach(
+            function (width, widthIndex) {
+              height = Math.round(width / aspect);
+              console.log(
+                "resizing " + filename + "to " + height + "x" + height
+              );
+              this.resize(width, height).write(
+                dest + "w" + width + "_" + filename,
+                function (err) {
+                  if (err) console.log("Error writing file: " + err);
+                }
+              );
+            }.bind(this)
+          );
+        }
+      });
+    });
+  }
+});
+```
+
+Thanks to [Callback Hell](http://callbackhell.com/).
+
+## Example with Promises
+
+Some rules:
+
+- Name promise based functions using verbs (`getJSON` etc.)
+
+- Promise represents single operation (every `then` fires only once)
+
+
+### Example with `setTimeout`
+
+<LiveExample link="https://jsfiddle.net/fedek6/z0gnf75h/" />
+
+This is no-nonsense example on how promises work:
+
+```js
+const wait = (duration) => {
+  return new Promise((resolve, reject) => {
+    if (duration < 0) {
+      reject(new Error("Duration cannot be negative"));
+    }
+
+    setTimeout(() => {
+      resolve(duration);
+    }, duration);
+  });
+};
+
+const handleChain = (lastDuration, newDuration) => {
+  console.log(`Another ${lastDuration / 1000}s has passed`);
+
+  if (newDuration) {
+    return wait(newDuration);
+  }
+};
+
+// OK run
+wait(1000)
+  .then((d) => console.log(`${d / 1000}s has passed`))
+  .catch((e) => console.log(e.message));
+
+// Error run
+wait(-1000)
+  .then(() => console.log("One second has passed"))
+  .catch((e) => console.log("Error", e.message));
+
+// Simple chain
+wait(1000)
+  .then((d) => handleChain(d, 2000))
+  .then((d) => handleChain(d, 3000))
+  .then((d) => handleChain(d))
+  .catch((e) => console.log(e.message));
+```
+
+## Using fetch
+
+<LiveExample link="https://jsfiddle.net/fedek6/g6vq97s2/" />
+
+`fetch` is a global method that provides easy way to fetch remote resources. It's promise based and replaces old `XMLHttpRequest`.
+
+```js
+// OK run
+fetchWithTimeout("https://catfact.ninja/fact", { timeout: 1000 })
+  .then((response) => response.json())
+  .then((data) => {
+    const { fact } = data;
+    console.log("Cat fact:", fact);
+  })
+  .catch((error) => {
+    console.log("Error:", error.message);
+  });
+
+// Error run
+fetchWithTimeout("https://catfact.ninja/fakt", { timeout: 1000 })
+  .then((response) => response.json())
+  .then((data) => {
+    const { fact } = data;
+    console.log("Cat fact:", fact);
+  })
+  .catch((error) => {
+    console.log("Error:", error.message);
+  });
+
+/**
+ * We need fetch with timeout,
+ * because standard 90 - 300 is way to much!
+ * @link https://dmitripavlutin.com/timeout-fetch-request/
+ */
+async function fetchWithTimeout(resource, options = {}) {
+  const { timeout = 8000 } = options;
+
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+  const response = await fetch(resource, {
+    ...options,
+    signal: controller.signal,
+  });
+  clearTimeout(id);
+  return response;
+}
+```
+
+## Using `async` and `await`
+
+<VersionTag version="es2017" />
+
+<LiveExample link="https://jsfiddle.net/fedek6/x0745rsy/" />
+
+`async` and `await` constitute a wrapper for promise based code. In the main thread you still need to treat this functions with `then` and `catch` (because they return promise).
+
+**Important:** You can use `async` and `await` only in other `async` function (or in Node's top level await).
+
+
+```js
+const wait = (duration) => {
+  return new Promise((resolve, reject) => {
+    if (duration < 0) {
+      reject(new Error("Duration cannot be negative"));
+    }
+
+    setTimeout(() => {
+      resolve(duration)
+    }, duration);
+  });
+}
+
+const handleChain = (lastDuration, newDuration) => {
+  console.log(`Another ${lastDuration / 1000}s has passed`);
+
+  if (newDuration) {
+    return wait(newDuration);
+  }
+}
+
+// Version without execption
+const asyncAwaitWrap = async () => {
+	let totalTime = 0;
+
+	const duration1 = await wait(1000);
+	totalTime += duration1;
+	handleChain(duration1);
+	const duration2 = await wait(2000);
+	totalTime += duration2;
+	handleChain(duration2);
+	const duration3 = await wait(1000);
+	totalTime += duration3;
+	handleChain(duration3);
+
+	return totalTime;
+}
+
+// Version that brakes
+const asyncAwaitWrapBad = async () => {
+	const duration1 = await wait(1000);
+	handleChain(duration1);
+	const duration2 = await wait(-2000);
+	handleChain(duration2);
+	const duration3 = await wait(1000);
+	handleChain(duration3);
+
+	return true;
+}
+
+asyncAwaitWrap()
+	.then(r => {
+		console.log("Total time in asyncAwaitWrap", `${r / 1000}s`);
+
+		return asyncAwaitWrapBad();
+	})
+	.then(r => {
+		console.log("Result of asyncAwaitWrapBad", r);
+	})
+	.catch(e => console.log("Error", e.message));
+```
