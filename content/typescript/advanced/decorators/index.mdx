@@ -1,0 +1,61 @@
+---
+title: "Decorators"
+date: "2021-02-09"
+description: "Concept of Decorators"
+---
+
+import LiveExample from "components/LiveExample/LiveExample";
+
+# Concept of Decorators
+
+Decorators are taken fron Angular. They are proposed as future standard for JavaScript. Maybe it's time to learn them?
+
+To enable Decorators add the following option to your `tsconfig`:
+
+```json
+{
+  "compilerOptions": {
+    "experimentalDecorators": true
+  }
+}
+```
+
+## Most basic (stupid) example you'll find
+
+This Decorator's only role is to replace required property of object to `cholibka`✨
+
+```ts
+/**
+ * This is Decorator definition.
+ */
+const cholibka = (propName: string) => (
+  constructor: any,
+  methodName: string,
+  descriptor: PropertyDescriptor
+): any => {
+  const origFunction = descriptor.value;
+  descriptor.value = function wrapper() {
+    let result = origFunction.apply(this);
+
+    return {...result, [propName]: "cholibka!" };
+  }
+}
+
+/**
+ * Method of this class uses `cholibka` Decorator.
+ */
+class Test {
+  @cholibka("foo")
+  static test() {
+    return {
+      test: "Hello World!",
+      foo: "bar"
+    }
+  }
+}
+
+// Modified output
+console.log(Test.test()); // { "test": "Hello World!", "foo": "cholibka!" }
+```
+
+In short, you can modify a function output using this magic method! 🤯

@@ -50,6 +50,11 @@ const subCategoryDecorator = {
     description: "More complex data types in TS",
     icon: BulbOutlined,
   },
+  advanced: {
+    niceName: "Advanced features",
+    description: "TS for experienced devs",
+    icon: BulbOutlined,
+  },
   decorate(category) {
     return (
       this[category] ?? {
