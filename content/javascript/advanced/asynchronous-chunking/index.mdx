@@ -1,0 +1,73 @@
+---
+title: "Asynchronous chunking"
+date: "2022-02-11"
+description: "Example of asynchronous chunking"
+---
+
+import LiveExample from "components/LiveExample/LiveExample";
+
+# Asynchronous chunking
+
+<LiveExample link="https://jsfiddle.net/fedek6/306qb1cs/" />
+
+Let's assume a following scenario:
+
+- You have to take records from a local database (or any data storage).
+- You need to send them to some kind of an API.
+- You're limited to 10 simultaneous requests.
+
+What should you do? 🤔
+
+The answer is to split your data into chunks and send them asynchronously in parts.
+
+This basic example splits array into parts and simulates delayed exponentiation (promise based).
+
+```js
+const chunkSize = 10;
+
+const arraySize = 100;
+
+// Quite big array of consecutive numbers
+const bigArray = Array(arraySize)
+  .fill(1)
+  .map((e, i) => e * i);
+
+/**
+ * Falsy promise function.
+ * Random delay is added only for test purposes.
+ */
+const powPromise = (num) => {
+  return new Promise((resolve) => {
+    // from 0.1 to 1 second
+    const randomTimeout = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
+
+    setTimeout(() => {
+      resolve(num ** 2);
+    }, randomTimeout);
+  });
+};
+
+/**
+ * Chunks generator
+ * {url} https://stackoverflow.com/a/55435856
+ */
+function* chunks(arr, n) {
+  for (let i = 0; i < arr.length; i += n) {
+    yield arr.slice(i, i + n);
+  }
+}
+
+/**
+ * This could be replaced with for ... await
+ * But this feature is too new for jsfiddle :(
+ */
+(async () => {
+  let i = 0;
+  // Do only then at time.
+  for (const chunk of chunks(bigArray, chunkSize)) {
+    const promises = chunk.map((n) => powPromise(n));
+    const powResults = await Promise.all(promises);
+    console.log(powResults); // 100,121,144,169,196,225,256,289,324,361 etc.
+  }
+})();
+```

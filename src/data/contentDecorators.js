@@ -52,7 +52,7 @@ const subCategoryDecorator = {
   },
   advanced: {
     niceName: "Advanced features",
-    description: "TS for experienced devs",
+    description: "For experienced devs",
     icon: BulbOutlined,
   },
   decorate(category) {
