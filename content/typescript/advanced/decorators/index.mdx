@@ -8,7 +8,7 @@ import LiveExample from "components/LiveExample/LiveExample";
 
 # Concept of Decorators
 
-Decorators are taken fron Angular. They are proposed as future standard for JavaScript. Maybe it's time to learn them?
+Decorators are popular in Angular framework. They are also proposed as future standard for JavaScript.
 
 To enable Decorators add the following option to your `tsconfig`:
 
@@ -28,18 +28,21 @@ This Decorator's only role is to replace required property of object to `cholibk
 /**
  * This is Decorator definition.
  */
-const cholibka = (propName: string) => (
-  constructor: any,
-  methodName: string,
-  descriptor: PropertyDescriptor
-): any => {
-  const origFunction = descriptor.value;
-  descriptor.value = function wrapper() {
-    let result = origFunction.apply(this);
+const cholibka =
+  (propName: string) =>
+  (
+    constructor: any,
+    methodName: string,
+    descriptor: PropertyDescriptor
+  ): any => {
+    const origFunction = descriptor.value;
+    descriptor.value = function wrapper() {
+      let result = origFunction.apply(this);
 
-    return {...result, [propName]: "cholibka!" };
-  }
-}
+      // Here the magic happens
+      return { ...result, [propName]: "cholibka!" };
+    };
+  };
 
 /**
  * Method of this class uses `cholibka` Decorator.
@@ -49,8 +52,8 @@ class Test {
   static test() {
     return {
       test: "Hello World!",
-      foo: "bar"
-    }
+      foo: "bar",
+    };
   }
 }
 
@@ -58,4 +61,92 @@ class Test {
 console.log(Test.test()); // { "test": "Hello World!", "foo": "cholibka!" }
 ```
 
-In short, you can modify a function output using this magic method! 🤯
+In short, you can add a wrapper to a method and modify its returned value.
+
+## Using metadata
+
+Firstly you'll need to install an additional package:
+
+```bash
+npm install reflect-metadata
+```
+
+Secondly you'll need to modify your `tsconfig`:
+
+```json
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
+}
+```
+
+And then write a decorator in the following way:
+
+```ts
+import "reflect-metadata";
+
+export const addClass =
+  (...classNames: string[]) =>
+  (
+    constructor: any,
+    methodName: string,
+    descriptor: PropertyDescriptor
+  ): any => {
+    if (
+      Reflect.getMetadata("design:returntype", constructor, methodName) ===
+      HTMLElement
+    ) {
+      const origFunction = descriptor.value;
+
+      // Debug info
+      console.log(
+        "design:returntype",
+        Reflect.getMetadata("design:returntype", constructor, methodName).name
+      ); // design:returntype HTMLElement
+
+      const paramTypes = Reflect.getMetadata(
+        "design:paramtypes",
+        constructor,
+        methodName
+      ).map((c: any) => c.name);
+
+      console.log("design:paramtypes", paramTypes.join(", ")); // design:paramtypes String
+
+      console.log(
+        "design:type",
+        Reflect.getMetadata("design:type", constructor, methodName).name
+      ); // design:type Function
+
+      descriptor.value = function wrapper(...args: any) {
+        const content: HTMLElement = origFunction.apply(this, args);
+        classNames.forEach((c) => content.classList.add(c));
+        return content;
+      };
+    }
+  };
+```
+
+Usage example:
+
+```ts
+import { addClass } from "./addClass";
+type AllHtmlTags = keyof HTMLElementTagNameMap;
+
+class Component {
+  constructor(private content: string) {}
+
+  // This will decorate returned HTMLElement with CSS classes.
+  @addClass("some-class", "other-class")
+  getComponent(type: AllHtmlTags): HTMLElement {
+    const element: HTMLElement = document.createElement(type);
+    element.textContent = this.content;
+    return element;
+  }
+}
+
+const c = new Component("CHOLIBKA!");
+
+document.body.appendChild(c.getComponent("h1"));
+```
