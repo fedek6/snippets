@@ -1,0 +1,92 @@
+---
+title: "Strings"
+date: "2022-04-07"
+description: "Useful tricks with strings"
+---
+
+# Strings
+
+> Note: all strings in JavaScript are encoded in UTF-16.
+
+Examples of strings:
+
+```js
+const name = "Mark";
+
+"" // Empty string
+'something' // Single quote
+"something else" // Double qoute
+`Hello ${name}!` // Template literal
+```
+
+## Multiline strings
+
+```js
+// Escaped new line
+'Two\nlines'
+
+// Escape char at the end of line
+"One \
+Long \
+Escaped \
+line."
+
+// Multiline template literal
+`Test this
+two lines text`
+```
+
+## String methods
+
+String object has useful methods:
+
+```js
+let s = "Hello World!";
+
+// Extract string parts
+s.substring (1, 4); // => "ell"
+s.slice(1, 4); // String is like an array with chars so => "ell"
+s.split(" "); // => ["Hello", "World"]
+
+// Find substring
+s.indexOf("H"); // First "H" => 0
+s.indexOf("zz"); // There is no "zz" => -1
+s.lastIndexOf("o"); // Last "o" => 7
+
+// Check if contains substring
+s.startsWith("Hello"); // => true
+s.endsWith("d") // => false
+s.includes("ello") // => true
+
+// String conversion
+s.replace("Hello", "Witaj"); // => "Witaj World!"
+s.toLowerCase();
+s.toUpperCase();
+s.normalize("NFC"); // Unicode NFC normalization (more info about that in a link below)
+
+// Chars at specific position
+s[0]; // => "H"
+s.charAt(0); // This is an equivalent to line above
+s.charAt(s.length - 1); // Last char => "!"
+s.charCodeAt(0); // 16 bit charcode => 72
+s.codePoinitAt(0); // The same but for chars longer than 16 bit (since ES6)
+
+// String completion (since ES8/2017)
+"x".padStart(3); // Add spaces to the total length of 3 => "  x"
+"x".padEnd(3);
+"x".padStart(3, "+"); // => "++x"
+"x".padEnd(3, "+"); // => "x++"
+
+// Automatic spaces removal (since ES10/2019)
+" test ".trim(); // => "test"
+" test ".trimStart(); // => "test "
+" test ".trimEnd(); // => " test"
+
+// Others
+s.concat("!!"); // => "Hello World!!!"
+"*".repeat(6); // => "******"
+```
+
+> This is funny polish joke: `\`${"*".repeat(5)} ${"*".repeat(3)}\`` 😉
+
+[Difference Between NFD, NFC, NFKD, and NFKC normalization](https://towardsdatascience.com/difference-between-nfd-nfc-nfkd-and-nfkc-explained-with-python-code-e2631f96ae6c)
