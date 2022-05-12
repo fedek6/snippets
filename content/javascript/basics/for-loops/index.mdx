@@ -1,0 +1,195 @@
+---
+title: "For loops"
+date: "2022-05-12"
+description: "All for loops"
+---
+
+import LiveExample from "components/LiveExample/LiveExample";
+import VersionTag from "components/VersionTag/VersionTag";
+
+# For loops
+
+## Basic for loop
+
+<LiveExample link="https://jsfiddle.net/fedek6/c0v9zftj/" />
+
+```
+for ([initialization]; [condition]; [final-expression])
+   statement
+```
+
+```js
+const testArray = ["first element", "second element", "third element"];
+
+// Simplest example
+for (let i = 0; i < testArray.length; i++) {
+  console.log(testArray[i]);
+}
+
+// Omiting initialization block
+let i = 0;
+for (; i < testArray.length; i++) {
+  console.log(testArray[i]);
+}
+
+// Omiting condition block
+for (let i = 0; ; i++) {
+  if (i === testArray.length) break;
+  console.log(testArray[i]);
+}
+
+// Omitting init, condition and final-expression block
+let a = 0;
+for (;;) {
+  if (a === testArray.length) break;
+  console.log(testArray[a]);
+  a++;
+}
+```
+
+## for of loop
+
+<VersionTag version="ES6" />
+
+<LiveExample link="https://jsfiddle.net/fedek6/gmkL4pbz/" />
+
+`for of` loop works on iterable objects such as arrays, strings, sets and maps.
+
+```js
+// For of on arrays
+const arrayExample = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+for (let element of arrayExample) {
+  console.log(element);
+}
+
+// Working on objects
+const objectExample = { a: 1, b: 2, c: 3 };
+
+/* Because object literal is non-iterable
+	we need to use Object.keys to create an array */
+for (let key of Object.keys(objectExample)) {
+  console.log(key, objectExample[key]);
+}
+
+// Values only
+for (let value of Object.values(objectExample)) {
+  console.log(value);
+}
+
+// We can also work by using Object.entries method
+for (let [key, value] of Object.entries(objectExample)) {
+  console.log(key, value);
+}
+
+// Working with sets
+const exampleSet = new Set(Object.values(objectExample));
+for (let value of exampleSet) {
+  console.log(value);
+}
+
+// Working with maps
+const exampleMap = new Map(Object.entries(objectExample));
+
+/* It's very similiar to working on objects
+  by using Object.entries*/
+for (let [key, value] of exampleMap) {
+  console.log(key, value);
+}
+```
+
+## for await
+
+<VersionTag version="ES8" />
+
+<LiveExample link="https://jsfiddle.net/fedek6/dq98nzuf/" />
+
+This loop is used for iterating async iterable objects.
+Statement of this type can be used only in async functions.
+
+```js
+async function* exampleGenerator() {
+  let i = 0;
+  while (i < 3) {
+    yield i++;
+  }
+}
+
+(async () => {
+  for await (const num of exampleGenerator()) {
+    console.log(num);
+  }
+})();
+
+/* Working on real async code*/
+const wait = (duration) => {
+  return new Promise((resolve, reject) => {
+    if (duration < 0) {
+      reject(new Error("Duration cannot be negative"));
+    }
+
+    setTimeout(() => {
+      resolve(duration);
+    }, duration);
+  });
+};
+
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function randomSeconds() {
+  return random(1000, 4000);
+}
+
+// Create four promises with random time
+async function* exampleAsyncGenerator() {
+  let i = 0;
+  while (i < 4) {
+    i++;
+    yield wait(randomSeconds());
+  }
+}
+
+// Sequentially awaiting for all promises
+(async () => {
+  for await (const num of exampleAsyncGenerator()) {
+    console.log(num);
+  }
+})();
+```
+
+## for in
+
+<LiveExample link="https://jsfiddle.net/fedek6/zsa8xhkL/" />
+
+This type of a loop works even with non-iterable objects.
+
+`for in` loop will go through all iterable properties.
+For example built-in method `toString` is not iterable the same as properties using symbols for names.
+
+```js
+const objectExample = { a: 1, b: 2, c: 3 };
+
+// Basic example
+for (let key in objectExample) {
+  console.log(objectExample[key]);
+}
+
+/* Converting object keys to array
+basically it's Object.keys functionality */
+let a = [];
+i = 0;
+for (a[i++] in objectExample);
+
+console.log(a);
+
+// Array example
+const arrayExample = ["test 1", "test 2", "test 3"];
+
+/* If you want to work on values instead of keys,
+	it's a lot easier to use for of loop! */
+for (let key in arrayExample) {
+  console.log(key);
+}
+```
