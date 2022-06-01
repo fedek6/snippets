@@ -1,0 +1,25 @@
+---
+title: "Flatten array of Maps"
+date: "2022-06-01"
+description: "Example of flattening array of Maps"
+---
+import LiveExample from "components/LiveExample/LiveExample";
+
+# Flatten array of Maps
+
+<LiveExample link="https://playcode.io/906208" />
+
+This example uses `flatMap` method. This might be useful when using rest operator in functions.
+
+```js
+const testData1 = [["test1", "cholibka"], ["test2", "cholibka"]];
+const testData2 = [["test3", "cholibka"], ["test4", "cholibka"]];
+const map1 = new Map(testData1);
+const map2 = new Map(testData2);
+const mapArray = [map1, map2];
+
+const mergedArray = new Map(mapArray.flatMap(map => [...map]));
+
+const mergedMap = new Map(mergedArray);
+console.log(mergedMap);
+```
