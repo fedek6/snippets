@@ -1,11 +1,34 @@
 ---
-title: "Flatten array of Maps"
+title: "Flattening objects"
 date: "2022-06-01"
-description: "Example of flattening array of Maps"
+description: "Examples of object flattenning"
 ---
 import LiveExample from "components/LiveExample/LiveExample";
 
-# Flatten array of Maps
+# Flattening objects
+
+## Flatten array of objects
+
+How to flatten array of simple objects:
+
+<LiveExample link="https://playcode.io/906240" />
+
+```js
+const test = [
+  {
+    foo1: "foo1",
+    bar1: "bar1",
+  },
+  {
+    foo2: "foo2",
+    bar2: "bar2"
+  }
+];
+
+console.log(Object.assign(...test));
+```
+
+## Flatten array of Maps
 
 <LiveExample link="https://playcode.io/906208" />
 
