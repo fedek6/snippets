@@ -1,0 +1,30 @@
+---
+title: "Filtering"
+date: "2022-06-02"
+description: "Examples of object filtering"
+---
+import LiveExample from "components/LiveExample/LiveExample";
+
+# Filtering
+
+## Check if every needed property is not falsy
+
+<LiveExample link="https://playcode.io/906754" />
+
+This function will return `true` only if all needed properties are non falsy:
+
+```js
+const testObject = {
+  foo: true,
+  bar: false,
+  zazu: true,
+};
+
+const arePropertiesNonFalsy = (obj, ...filter) => {
+  return Object.entries(obj)
+    .filter(arr => filter.includes(arr[0]))
+    .every(arr => !!arr[1]);
+};
+
+console.log(arePropertiesNonFalsy(testObject, "foo", "bar")); // false
+```
