@@ -1,0 +1,26 @@
+---
+title: "Double NOT (!!)"
+date: "2022-06-02"
+description: "Usage of double NOT operators"
+---
+import LiveExample from "components/LiveExample/LiveExample";
+
+# Usage of double NOT operators
+
+<LiveExample link="https://playcode.io/906777" />
+
+This is neat litte trick to convert (cast) any variable to `boolean`:
+
+```js
+const emptyString = "";
+
+console.log(typeof emptyString); // string
+console.log(typeof !!emptyString); // boolean
+console.log(!!emptyString); // false
+
+const emptyObject = Object.create(null);
+
+console.log(typeof emptyObject); // Object
+console.log(typeof !!emptyObject); // boolean
+console.log(!!emptyObject); // true
+```
