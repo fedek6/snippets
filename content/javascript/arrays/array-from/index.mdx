@@ -1,0 +1,41 @@
+---
+title: "Array.from() method"
+date: "2022-06-07"
+description: "Using array from method"
+---
+import LiveExample from "components/LiveExample/LiveExample";
+
+# `Array.from()`
+
+<LiveExample link="https://jsfiddle.net/fedek6/Ls73m5fa/" />
+
+`from` works exactly the same as the spread operator `...`.
+
+```js
+const originalArray = [1, 3, 7, 11];
+const copiedArray = Array.from(originalArray);
+
+console.log(copiedArray); // [1, 3, 7, 11]
+```
+
+## As conversion method
+
+This method can be used to convert other iterable objects to arrays.
+
+```js
+const exampleMap = new Map([[1, 2], [2, 4], [4, 8]]);
+const exampleArray = Array.from(exampleMap);
+
+console.log(exampleArray); // [1, 2, 2, 4, 4, 8]
+```
+
+## As `map` equivalent
+
+You can also use `from` like a faster `map` method:
+
+```js
+const originalArray = [1, 3, 7, 11];
+const mappedArray = Array.from(originalArray, (element) => element * 10);
+
+console.log(mappedArray); // [10, 30, 70, 110]
+```
