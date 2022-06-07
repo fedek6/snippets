@@ -1,4 +1,4 @@
-import { UserOutlined, BulbOutlined, QuestionOutlined } from "@ant-design/icons";
+import { UserOutlined, BulbOutlined, QuestionOutlined, BorderOutlined } from "@ant-design/icons";
 
 const categoryDecorator = {
   javascript: {
@@ -54,6 +54,11 @@ const subCategoryDecorator = {
     niceName: "Advanced features",
     description: "For experienced devs",
     icon: BulbOutlined,
+  },
+  objects: {
+    niceName: "Objects",
+    description: "Working with objects",
+    icon: BorderOutlined,
   },
   decorate(category) {
     return (
