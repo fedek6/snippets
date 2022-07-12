@@ -1,0 +1,88 @@
+---
+title: "Closures"
+date: "2022-07-12"
+description: "Example of closures"
+---
+
+import LiveExample from "components/LiveExample/LiveExample";
+
+# Closures
+
+<LiveExample link="https://jsfiddle.net/fedek6/pjcvt4uh/" />
+
+JavaScript is a language with **first-class** functions. It allows you to create lexically scoped name bindings.
+
+**In short**: a closure is a record storing a function together with an environment.
+
+```js
+let scope = "I'm global";
+
+function checkScope() {
+  let scope = "I'm local";
+  function f() {
+    return scope;
+  }
+  return f;
+}
+
+console.log(checkScope()()); // I'm local
+```
+
+You can use this environment as a function state:
+
+```js
+let uniqueInteger = (function () {
+  let counter = 0;
+  return function () {
+    return counter++;
+  };
+})();
+
+console.log(uniqueInteger()); // 0
+console.log(uniqueInteger()); // 1
+console.log(uniqueInteger()); // 2
+```
+
+You can also encapsulate multiple methods in a closure:
+
+```js
+function counter() {
+  let counter = 0;
+  return {
+    uniqueInteger: function () {
+      return counter++;
+    },
+    reset: function () {
+      counter = 0;
+    },
+  };
+}
+
+const c = counter();
+console.log(c.uniqueInteger()); // 0
+console.log(c.uniqueInteger()); // 1
+c.reset();
+console.log(c.uniqueInteger()); // 0
+```
+
+*This very similiar to creating an object using OOP, in fact JavaScript function is an object! Some might say that closures are objects in functional programming.*
+
+You can also use getters and setters:
+
+```js
+function gsCounter(n) {
+  return {
+    get count() {
+      return n++;
+    },
+    set count(m) {
+      n = m;
+    },
+  };
+}
+
+const d = gsCounter(0);
+console.log(d.count); // 0
+d.count = 100;
+console.log(d.count); // 100
+```
